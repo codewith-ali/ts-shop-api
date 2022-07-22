@@ -7,10 +7,8 @@ import {
   DocumentType,
   index,
 } from "@typegoose/typegoose";
-// import { nanoid } from "nanoid";
 import argon2 from "argon2";
 import log from "../utils/logger";
-
 
 @pre<User>("save", async function () {
   if (!this.isModified("password")) {
@@ -35,13 +33,15 @@ import log from "../utils/logger";
 export class User {
   @prop({ lowercase: true, required: true, unique: true })
   email: string;
-
+  
+  
   @prop({ required: true })
   firstName: string;
 
   @prop({ required: true })
   lastName: string;
-
+  
+ 
   @prop({ required: true })
   password: string;
 
@@ -58,6 +58,10 @@ export class User {
   }
 }
 
+
 const UserModel = getModelForClass(User);
 
-export default UserModel;
+export default  UserModel;
+
+
+

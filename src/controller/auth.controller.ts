@@ -1,16 +1,12 @@
-
 import { Request, Response } from "express";
-import { CreateSessionInput } from "../schema/auth.schema";
 import {
- 
   signAccessToken
- 
 } from "../service/auth.service";
 import { findAllUser, findUserByEmail, findUserById } from "../service/user.service";
 
 
 export async function createSessionHandler(
-  req: Request<{}, {}, CreateSessionInput>,
+  req: Request,
   res: Response
 ) {
   const message = "Invalid email or password";
@@ -24,7 +20,7 @@ export async function createSessionHandler(
 
   const isValid = await user.validatePassword(password);
 
-  if (!isValid) {
+  if (isValid) {
     return res.send(message);
   }
 
@@ -32,9 +28,8 @@ export async function createSessionHandler(
   const accessToken = signAccessToken(user);
 
   // send the tokens
-
   return res.send({
-    accessToken
+    accessToken, user
    
   });
 }

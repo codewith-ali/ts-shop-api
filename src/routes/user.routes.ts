@@ -1,23 +1,15 @@
-import validateResource from "../middleware/validateResource";
-import {
-  createUserSchema,
-
- 
-} from "../schema/user.schema";
+import validation from "../middleware/validateregisteration";
 import {
   createUserHandler
- 
 } from "../controller/user.controller";
-import express from "express";
 
+import express from "express";
 const router = express.Router();
 
 router.post(
   "/api/users",
-  validateResource(createUserSchema), 
+  validation,
   createUserHandler
- 
-  
 );
 
 export default router;

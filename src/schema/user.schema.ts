@@ -1,28 +1,25 @@
-import { object, string, TypeOf } from "zod";
+import { IsString, MinLength, MaxLength, IsEmail } from "class-validator";
+import { User } from "../model/user.model";
 
-export const createUserSchema = object({
-  body: object({
-    firstName: string({
-      required_error: "First name is required",
-    }),
-    lastName: string({
-      required_error: "Last name is required",
-    }),
-    password: string({
-      required_error: "Password is required",
-    }).min(6, "Password is too short - should be min 6 chars"),
-   
-    email: string({
-      required_error: "Email is required",
-    }).email("Not a valid email"),
-  })
-});
+export class validateUser implements Pick<User, 'firstName' | 'lastName' | 'email' | 'password'> {
+  @IsString()
+  @MinLength(5)
+  @MaxLength(50)
+  firstName: string;
 
-export const verifyUserSchema = object({
-  params: object({
-    id: string(),
-    verificationCode: string(),
-  }),
-});
+  @IsString()
+  @MinLength(5)
+  @MaxLength(50)
+  lastName: string;
 
-export type CreateUserInput = TypeOf<typeof createUserSchema>["body"];
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  password:string;
+}
+
+
+
+
+

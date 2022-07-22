@@ -1,18 +1,14 @@
-import { object, string, TypeOf } from "zod";
+import { IsString, MinLength, MaxLength } from "class-validator";
+import { Product } from "../model/product.model";
 
-export const createUserSchema = object({
-  body: object({
-    name: string({
-      required_error: "First name is required",
-    })
-  })
-});
+export class validateProduct implements Pick<Product, 'name' | 'desc'> {
+  @IsString()
+  @MinLength(5)
+  @MaxLength(50)
+  name: string;
 
-export const verifyUserSchema = object({
-  params: object({
-    id: string(),
-    verificationCode: string(),
-  }),
-});
-
-export type CreateUserInput = TypeOf<typeof createUserSchema>["body"];
+  @IsString()
+  @MinLength(5)
+  @MaxLength(50)
+  desc: string;
+}

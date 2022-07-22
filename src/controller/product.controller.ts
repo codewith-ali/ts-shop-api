@@ -1,13 +1,11 @@
 import { Request, Response } from "express";
 
-
 import {
   createProduct,
+  findAllProduct,
   findProductById
  
 } from "../service/product.services";
-
-
 
 export async function createproductHandler(
   req: Request<{}, {}>,
@@ -42,4 +40,26 @@ export async function productByIdHandler(
     return res.send({
      prod
     });
-}
+}  
+
+export async function AllProductHandler(
+  req: Request,
+  res: Response
+) {
+
+  const message = 'something went wrong'
+  
+  const prod = await findAllProduct();
+ 
+  if (!prod) {
+    return res.send(message);
+  }
+
+  return res.send({
+   prod
+  });
+}  
+
+
+
+ 

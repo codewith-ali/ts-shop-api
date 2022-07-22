@@ -5,14 +5,17 @@ import {
   allUsers
   
 } from "../controller/auth.controller";
-import validateResource from "../middleware/validateResource";
-import { createSessionSchema } from "../schema/auth.schema";
+import validation from "../middleware/validateAuth";
+// import validateResource from "../middleware/validateResource";
+// import { createSessionSchema } from "../schema/auth.schema";
 
 const router = express.Router();
 
 router.post(
   "/api/sessions",
-  validateResource(createSessionSchema),
+  // validateResource(createSessionSchema),
+  validation,
+
   createSessionHandler
 );
 
