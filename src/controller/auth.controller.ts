@@ -2,68 +2,101 @@ import { Request, Response } from "express";
 import {
   signAccessToken
 } from "../service/auth.service";
-import { findAllUser, findUserByEmail, findUserById } from "../service/user.service";
+import {findUserByEmail} from "../service/user.service";
 
 
-export async function createSessionHandler(
-  req: Request,
-  res: Response
-) {
-  const message = "Invalid email or password";
-  const { email, password } = req.body;
+// export async function createSessionHandler(
+//   req: Request,
+//   res: Response
+// ) {
+//   const message = "Invalid email or password";
+//   const { email, password } = req.body;
 
-  const user = await findUserByEmail(email);
+//   const user = await findUserByEmail(email);
 
-  if (!user) {
-    return res.send(message);
-  }
+//   if (!user) {
+//     return res.send(message);
+//   }
 
-  const isValid = await user.validatePassword(password);
+//   const isValid = await user.validatePassword(password);
 
-  if (isValid) {
-    return res.send(message);
-  }
+//   if (isValid) {
+//     return res.send(message);
+//   }
 
-  // sign a access token
-  const accessToken = signAccessToken(user);
+//   // sign a access token
+//   const accessToken = signAccessToken(user);
 
-  // send the tokens
-  return res.send({
-    accessToken, user
+//   // send the tokens
+//   return res.send({
+//     accessToken, user
    
-  });
-}
+//   });
+// }
 
-export async function oneUser(
-  req: Request,
-  res: Response
-) {
-  const message = "Invalid Id";
-  const { id} = req.params;
+// export async function oneUser(
+//   req: Request,
+//   res: Response
+// ) {
+//   const message = "Invalid Id";
+//   const { id} = req.params;
 
-  const user = await findUserById(id);
+//   const user = await findUserById(id);
  
-  if (!user) {
-    return res.send(message);
-  }
+//   if (!user) {
+//     return res.send(message);
+//   }
 
-  return res.send({
-   user
-  });
-}
-export async function allUsers(
-  req: Request,
-  res: Response
-) {
+//   return res.send({
+//    user
+//   });
+// }
+// export async function allUsers(
+//   req: Request,
+//   res: Response
+// ) {
 
 
-  const users = await findAllUser();
+//   const users = await findAllUser();
  
-  if (!users) {
-    return res.send('error');
-  }
+//   if (!users) {
+//     return res.send('error');
+//   }
 
-  return res.send({
-   users
-  });
+//   return res.send({
+//    users
+//   });
+// }
+
+class AuthController {
+  async createSessionHandler(
+    req: Request,
+    res: Response
+  ) {
+    const message = "Invalid email or password";
+    const { email, password } = req.body;
+  
+    const user = await findUserByEmail(email);
+  
+    if (!user) {
+      return res.send(message);
+    }
+  
+    const isValid = await user.validatePassword(password);
+  
+    if (isValid) {
+      return res.send(message);
+    }
+  
+    // sign a access token
+    const accessToken = signAccessToken(user);
+  
+    // send the tokens
+    return res.send({
+      accessToken, user
+     
+    });
+  }
 }
+export default new AuthController();
+

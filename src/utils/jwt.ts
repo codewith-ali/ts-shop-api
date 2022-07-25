@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import express, { NextFunction } from "express";
 import config from "config";
 
 export function signJwt(
@@ -36,16 +35,4 @@ export function verifyJwt<T>(
 }
 
 
-// const verifyToken = (req:Request, res:Response, next:NextFunction) => {
-//   const authHeader = req.headers.token;
-//   if (authHeader) {
-//     const token = authHeader.split(" ")[1];
-//     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
-//       if (err) res.json("Token is not valid!");
-//       req.user = user;
-//       next();
-//     });
-//   } else {
-//     return res.status(401).json("You are not authenticated!");
-//   }
-// };
+

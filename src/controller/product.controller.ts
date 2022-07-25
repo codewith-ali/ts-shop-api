@@ -7,23 +7,26 @@ import {
  
 } from "../service/product.services";
 
-export async function createproductHandler(
-  req: Request<{}, {}>,
-  res: Response
-) {
-  const body = req.body;
 
-  try {
-    const user = await createProduct(body);
-
-
-    return res.send("Product successfully created"+ user);
-  } catch (e: any) {
-    
-    return res.status(500).send(e);
+class productController{
+  async createproductHandler(
+    req: Request<{}, {}>,
+    res: Response
+  ) {
+    const body = req.body;
+  
+    try {
+      const user = await createProduct(body);
+  
+  
+      return res.send("Product successfully created"+ user);
+    } catch (e: any) {
+      
+      return res.status(500).send(e);
+    }
   }
-}
-export async function productByIdHandler(
+
+  async productByIdHandler(
     req: Request,
     res: Response
   ) {
@@ -42,7 +45,7 @@ export async function productByIdHandler(
     });
 }  
 
-export async function AllProductHandler(
+async AllProductHandler(
   req: Request,
   res: Response
 ) {
@@ -60,6 +63,9 @@ export async function AllProductHandler(
   });
 }  
 
+}
+
+export default new productController();
 
 
  
